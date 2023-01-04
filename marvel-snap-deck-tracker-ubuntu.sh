@@ -7,14 +7,27 @@ SCRIPT_FILE=$(basename $BASH_SOURCE)
 source $SCRIPT_PATH/utils/main.sh
 
 echo ""
-echo -e "${YELLOW}Ubuntu Builder for the Marvel Snap Deck Tracker${NC} (v$VERSION)"
+echo -e "${YELLOW}Ubuntu binary builder for the Marvel Snap Deck Tracker${NC} (v$VERSION)"
 echo -e "${YELLOW}Copyright © 2023:${NC} Fernando Porrino Serrano"
 echo -e "${YELLOW}Under the AGPL license:${NC} https://github.com/FherStk/marvelsnaptracker-forubuntu/blob/main/LICENSE"
 echo
-echo -e "${CYAN}This is an Ubuntu builder for the Marvel Snap Deck Tracker by ${LCYAN}Razviar${CYAN}, please visit ${LCYAN}https://github.com/Razviar/marvelsnaptracker${CYAN} for further information.${NC}"
+echo -e "${CYAN}This is an Ubuntu binary builder for the Marvel Snap Deck Tracker by ${LCYAN}Razviar${CYAN}, please visit ${LCYAN}https://github.com/Razviar/marvelsnaptracker${CYAN} for further information.${NC}"
 echo
 
 trap 'abort' 0
+
+#Checking for "sudo"
+if [ "$EUID" -ne 0 ]
+then 
+    echo ""
+    echo -e "${RED}Please, run with 'sudo'.$NC"
+
+    trap : 0
+    exit 0
+fi    
+
+#Update if new versions  
+auto-update true
 
 echo ""
 title "Updating apt sources:"

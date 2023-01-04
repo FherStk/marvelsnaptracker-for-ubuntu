@@ -45,6 +45,38 @@ apt-install()
   fi
 }
 
+auto-update()
+{
+  ####################################################################################
+  #Description: Updates this app and restarts it.
+  #Input:  $1 => If 'true' then restarts the app
+  #Output: N/A
+  ####################################################################################     
+
+  echo ""
+  title "Checking for a new app version: "
+  get-branch
+
+  if [ $(LC_ALL=C git -C $BASE_PATH status -uno | grep -c "Your branch is up to date with 'origin/$CURRENT_BRANCH'") -eq 1 ];
+  then     
+    echo -e "Up to date, skipping..."
+  else
+    echo "" 
+    echo -e "${CYAN}New version found, updating...$NC"
+    git -C $BASE_PATH reset --hard origin/$CURRENT_BRANCH
+    echo "Update completed." 
+
+    if [ $1 = true ]; 
+    then
+      echo "Restarting the app..."
+    
+      trap : 0
+      bash $SCRIPT_PATH/$SCRIPT_FILE
+      exit 0
+    fi
+  fi
+}
+
 abort()
 { 
   ####################################################################################
