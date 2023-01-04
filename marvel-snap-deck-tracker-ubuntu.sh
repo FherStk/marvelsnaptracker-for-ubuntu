@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.0.6"
+VERSION="0.0.7"
 
 SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SCRIPT_FILE=$(basename $BASH_SOURCE)
@@ -62,10 +62,14 @@ lxc exec $_container -- /bin/bash /etc/marvelsnaptracker-forubuntu/utils/build.s
 
 echo
 echo "Copying the binary to the local host..."
-lxc file pull $_container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-x64' ./build --recursive
+lxc file pull $_container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-x64' . --recursive
+
+echo "Setting up permissions..."
+mv "Marvel\ Snap\ Tracker" build
+chown -R $SUDO_USER:$SUDO_USER build 
 
 echo ""
-echo -e "${GREEN}Done! You'll find the binary into the /build folder, run it with './Marvel\ Snap\ Tracker'{$NC}"
+echo -e "${GREEN}Done! You'll find the binary into the '/build/' folder, run it with './Marvel\ Snap\ Tracker'{$NC}"
 
 trap : 0
 exit 0
