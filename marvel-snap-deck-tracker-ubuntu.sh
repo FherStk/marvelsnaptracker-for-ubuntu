@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.0.5"
+VERSION="0.0.6"
 
 SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SCRIPT_FILE=$(basename $BASH_SOURCE)
@@ -13,8 +13,6 @@ echo -e "${YELLOW}Under the AGPL license:${NC} https://github.com/FherStk/marvel
 echo
 echo -e "${PURPLE}Attention please:${NC} This is an Ubuntu binary builder for the Marvel Snap Deck Tracker by ${LCYAN}Razviar${NC}, please visit ${LCYAN}https://github.com/Razviar/marvelsnaptracker${NC} for further information."
 
-trap 'abort' 0
-
 #Checking for "sudo"
 if [ "$EUID" -ne 0 ]
 then 
@@ -24,6 +22,8 @@ then
     trap : 0
     exit 0
 fi    
+
+trap 'abort' 0
 
 #Update if new versions  
 auto-update true
@@ -66,3 +66,6 @@ lxc file pull $_container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-
 
 echo ""
 echo -e "${GREEN}Done! You'll find the binary into the /build folder, run it with './Marvel\ Snap\ Tracker'{$NC}"
+
+trap : 0
+exit 0
