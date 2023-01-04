@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.0.7"
+VERSION="0.0.8"
 
 SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SCRIPT_FILE=$(basename $BASH_SOURCE)
@@ -65,7 +65,8 @@ echo "Copying the binary to the local host..."
 lxc file pull $_container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-x64' . --recursive
 
 echo "Setting up permissions..."
-mv "Marvel\ Snap\ Tracker" build
+rm -r build
+mv Marvel\ Snap\ Tracker-linux-x64/ build
 chown -R $SUDO_USER:$SUDO_USER build 
 
 echo ""
