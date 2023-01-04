@@ -1,4 +1,7 @@
 #!/bin/bash
+#Global vars:
+BASE_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+CURRENT_BRANCH="main"
 
 # Terminal colors:
 # Black        0;30     Dark Gray     1;30
