@@ -62,8 +62,10 @@ lxc file push --recursive $SCRIPT_PATH ${_container}/etc/
 echo "Running the build script within the container..."
 lxc exec $_container -- /bin/bash /etc/marvelsnaptracker-forubuntu/utils/build.sh
 
+echo
 echo "Copying the binary to the local host..."
 lxc file pull $_container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-x64' ./build --recursive
 
 echo ""
 echo -e "${GREEN}Done! You'll find the binary into the /build folder, run it with './Marvel\ Snap\ Tracker'{$NC}"
+trap : 0  
