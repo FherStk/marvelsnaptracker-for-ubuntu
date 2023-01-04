@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.0.1"
+VERSION="0.0.2"
 
 SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SCRIPT_FILE=$(basename $BASH_SOURCE)
@@ -39,17 +39,22 @@ echo ""
 title "Setting up the LXC/LXD container:"    
 if [ $(lxc storage list | grep -c "CREATED") -eq 0 ];
 then    
-    echo ""
-    title "Initializing the LXC/LXD container..."
+    echo "Initializing the LXC/LXD container..."
     lxd init --auto
 else
-    echo ""
-    echo -e "${CYAN}LXC/LXD container already initialized, skipping...$NC"
+    echo "LXC/LXD container already initialized, skipping..."
 fi
 
 _container="marvel-snap-deck-tracker-builder"
-lxc launch ubuntu:22.04 $_container
+if [ $(lxc storage list | grep -c "$_container") -eq 0 ];
+then    
+    echo "Creating a new LXC/LXD image..."
+    lxc launch ubuntu:22.04 $_container
+else
+    echo "LXC/LXD image already exists, skipping..."
+fi
 
+echo
 title "Building the binary:"
 echo "Copying the build script within the container..."
 lxc file push --recursive $SCRIPT_PATH ${_container}/etc/
@@ -58,11 +63,7 @@ echo "Running the build script within the container..."
 lxc exec $_container -- /bin/bash /etc/marvelsnaptracker-forubuntu/utils/build.sh
 
 echo "Copying the binary to the local host..."
-lxc file pull marvel-snap-deck-tracker/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-x64' ./build --recursive
-
-echo "Cleaning..."
-lxc stop $_container
-lxc delete $_container
+lxc file pull $_container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-x64' ./build --recursive
 
 echo ""
 echo -e "${GREEN}Done! You'll find the binary into the /build folder, run it with './Marvel\ Snap\ Tracker'{$NC}"

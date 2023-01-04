@@ -29,9 +29,15 @@ apt-install "bison"
 apt-install "python3-dbusmock"
 apt-install "openjdk-8-jre"
 
-title "Downloading the Marvel Snap Deck Tracker:"
-git clone https://github.com/Razviar/marvelsnaptracker.git
-cd marvelsnaptracker
+if [ $(ls | grep -c "marvelsnaptracker") -eq 0 ];
+then    
+    title "Downloading the Marvel Snap Deck Tracker:"
+    git clone https://github.com/Razviar/marvelsnaptracker.git
+    cd marvelsnaptracker
+else
+    title "Updating the Marvel Snap Deck Tracker:"
+    git -C reset --hard origin/master
+fi
 
 title "Setting up the build environment:"
 npm install -g pkg electron-forge
