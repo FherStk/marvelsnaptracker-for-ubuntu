@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.0.4"
+VERSION="0.0.5"
 
 SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SCRIPT_FILE=$(basename $BASH_SOURCE)
@@ -45,9 +45,8 @@ else
 fi
 
 _container="marvel-snap-deck-tracker-builder"
-if [ $(lxc storage list | grep -c "$_container") -eq 0 ];
+if [ $(lxc list | grep -c "$_container") -eq 0 ];
 then    
-    echo "Creating a new LXC/LXD image..."
     lxc launch ubuntu:22.04 $_container
 else
     echo "LXC/LXD image already exists, skipping..."
@@ -67,4 +66,3 @@ lxc file pull $_container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-
 
 echo ""
 echo -e "${GREEN}Done! You'll find the binary into the /build folder, run it with './Marvel\ Snap\ Tracker'{$NC}"
-trap : 0  
