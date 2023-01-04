@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="0.0.8"
+VERSION="0.0.9"
 
 SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SCRIPT_FILE=$(basename $BASH_SOURCE)
@@ -17,7 +17,7 @@ echo -e "${PURPLE}Attention please:${NC} This is an Ubuntu binary builder for th
 if [ "$EUID" -ne 0 ]
 then 
     echo ""
-    echo -e "${RED}Please, run with 'sudo'.$NC"
+    echo -e "${RED}Please, run with 'sudo'.${NC}"
 
     trap : 0
     exit 0
@@ -70,7 +70,9 @@ mv Marvel\ Snap\ Tracker-linux-x64/ build
 chown -R $SUDO_USER:$SUDO_USER build 
 
 echo ""
-echo -e "${GREEN}Done! You'll find the binary into the '/build/' folder, run it with './Marvel\ Snap\ Tracker'{$NC}"
+echo -e "${GREEN}Done!${NC}"
+echo "You'll find the binary into the ${CYAN}build/${NC} folder, run it with ${CYAN}./Marvel\ Snap\ Tracker${NC}."
+echo "Also, you'll must setup the log path under the settings tab, this command will locate the proper folder: ${CYAN}sudo find / -type f -name ProfileState.json${NC} (thanks to ${CYAN}@leonardogonfiantini${NC})."
 
 trap : 0
 exit 0
