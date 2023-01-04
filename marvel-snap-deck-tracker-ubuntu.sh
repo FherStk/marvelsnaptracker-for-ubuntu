@@ -11,7 +11,7 @@ echo -e "${YELLOW}Ubuntu binary builder for the Marvel Snap Deck Tracker${NC} (v
 echo -e "${YELLOW}Copyright © 2023:${NC} Fernando Porrino Serrano"
 echo -e "${YELLOW}Under the AGPL license:${NC} https://github.com/FherStk/marvelsnaptracker-forubuntu/blob/main/LICENSE"
 echo
-echo -e "${PURPLE}Attention please:${NC} This is an Ubuntu binary builder for the Marvel Snap Deck Tracker by ${LCYAN}Razviar${CYAN}, please visit ${LCYAN}https://github.com/Razviar/marvelsnaptracker${CYAN} for further information.${NC}"
+echo -e "${PURPLE}Attention please:${NC} This is an Ubuntu binary builder for the Marvel Snap Deck Tracker by ${LCYAN}Razviar${NC}, please visit ${LCYAN}https://github.com/Razviar/marvelsnaptracker${NC} for further information."
 echo
 
 trap 'abort' 0
