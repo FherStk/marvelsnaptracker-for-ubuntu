@@ -65,7 +65,7 @@ echo "Copying the binary to the local host..."
 lxc file pull $_container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-x64' . --recursive
 
 echo "Setting up permissions..."
-rm -r build
+rm -rf build
 mv Marvel\ Snap\ Tracker-linux-x64/ build
 chown -R $SUDO_USER:$SUDO_USER build 
 
