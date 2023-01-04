@@ -77,6 +77,19 @@ auto-update()
   fi
 }
 
+get-branch()
+{
+  ####################################################################################
+  #Description: Loads the current git branch.
+  #Input:  N/A
+  #Output: CURRENT_BRANCH => The current git branch
+  #################################################################################### 
+
+  echo -e "Getting the current branch info..."
+  git -C $BASE_PATH fetch --all
+  CURRENT_BRANCH=$(git -C $BASE_PATH rev-parse --abbrev-ref HEAD)
+}
+
 abort()
 { 
   ####################################################################################
