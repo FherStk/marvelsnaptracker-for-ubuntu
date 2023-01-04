@@ -33,13 +33,11 @@ echo ""
 title "Updating apt sources:"
 apt update
 
-echo ""
-title "Installing dependencies:"
 apt-install lxc
 
 echo ""
 title "Setting up the LXC/LXD container:"    
-if [ $(lxc list | grep -c "lxd init") -eq 1 ];
+if [ $(lxc storage list | grep -c "CREATED") -eq 0 ];
 then    
     echo ""
     title "Initializing the LXC/LXD container..."
