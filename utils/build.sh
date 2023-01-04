@@ -39,7 +39,8 @@ then
 else
     echo
     title "Updating the Marvel Snap Deck Tracker:"
-    git pull
+    cd marvelsnaptracker
+    git -C reset --hard origin/master
 fi
 
 echo
