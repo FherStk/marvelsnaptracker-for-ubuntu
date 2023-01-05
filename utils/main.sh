@@ -18,17 +18,28 @@ YELLOW='\033[1;33m'
 ORANGE='\033[0;33m'
 CYAN='\033[0;36m'
 LCYAN='\033[1;36m'
-PURPLE='\033[1;35m'
+PURPLE='\033[0;35m'
+LPURPLE='\033[1;35m'
 NC='\033[0m' # No Color
 
 title(){
   ####################################################################################
   #Description: Displays a title caption using the correct colors. 
-  #Input:  $1 => Main caption | $2 => secondary caption
+  #Input:  $1 => Main caption | $2 => secondary caption | $3 => termination
   #Output: N/A
   ####################################################################################
 
-  echo -e "${LCYAN}${1}${CYAN}${2}${NC}"
+  echo -e "${LCYAN}${1}${CYAN}${2}${NC}${3}"
+}
+
+question(){
+  ####################################################################################
+  #Description: Displays a question caption using the correct colors. 
+  #Input:  $1 => Main caption | $2 => secondary caption | $3 => termination
+  #Output: N/A
+  ####################################################################################
+
+  echo -e "${LPURPLE}${1}${PURPLE}${2}${NC}${3}"
 }
 
 apt-install()
@@ -106,4 +117,12 @@ abort()
   echo ""
   echo -e "${RED}An error occurred. Exiting...$NC" >&2
   exit 1
+}
+
+done-ok()
+{
+  echo ""
+  echo -e "${GREEN}Done!${NC}"
+  trap : 0
+  exit 0
 }

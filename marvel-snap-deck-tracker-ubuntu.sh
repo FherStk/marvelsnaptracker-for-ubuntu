@@ -3,6 +3,7 @@ VERSION="1.0.0"
 
 SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SCRIPT_FILE=$(basename $BASH_SOURCE)
+INSTALL_PATH="/etc/marvel-snap-tracker/"
 
 source $SCRIPT_PATH/utils/main.sh
 
@@ -11,7 +12,7 @@ echo -e "${YELLOW}Ubuntu binary builder for the Marvel Snap Deck Tracker${NC} (v
 echo -e "${YELLOW}Copyright © 2023:${NC} Fernando Porrino Serrano"
 echo -e "${YELLOW}Under the AGPL license:${NC} https://github.com/FherStk/marvelsnaptracker-forubuntu/blob/main/LICENSE"
 echo
-echo -e "${PURPLE}Attention please:${NC} This is an Ubuntu binary builder for the Marvel Snap Deck Tracker by ${LCYAN}Razviar${NC}, please visit ${LCYAN}https://github.com/Razviar/marvelsnaptracker${NC} for further information."
+echo -e "${LPURPLE}Attention please:${NC} This is an Ubuntu binary builder for the Marvel Snap Deck Tracker by ${LCYAN}Razviar${NC}, please visit ${LCYAN}https://github.com/Razviar/marvelsnaptracker${NC} for further information."
 
 #Checking for "sudo"
 if [ "$EUID" -ne 0 ]
@@ -44,10 +45,10 @@ else
     echo "LXC/LXD container already initialized, skipping..."
 fi
 
-_container="marvel-snap-deck-tracker-builder"
-if [ $(lxc list | grep -c "$_container") -eq 0 ];
+container="marvel-snap-deck-tracker-builder"
+if [ $(lxc list | grep -c "$container") -eq 0 ];
 then    
-    lxc launch ubuntu:22.04 $_container
+    lxc launch ubuntu:22.04 $container
 else
     echo "LXC/LXD image already exists, skipping..."
 fi
@@ -55,24 +56,56 @@ fi
 echo
 title "Building the binary:"
 echo "Copying the build script within the container..."
-lxc file push --recursive $SCRIPT_PATH ${_container}/etc/
+lxc file push --recursive $SCRIPT_PATH ${container}/etc/
 
 echo "Running the build script within the container..."
-lxc exec $_container -- /bin/bash /etc/marvelsnaptracker-forubuntu/utils/build.sh
+lxc exec $container -- /bin/bash /etc/marvelsnaptracker-forubuntu/utils/build.sh
 
 echo
 echo "Copying the binary to the local host..."
-lxc file pull $_container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-x64' . --recursive
+lxc file pull $container/root/marvelsnaptracker/out/'Marvel Snap Tracker-linux-x64' . --recursive
 
 echo "Setting up permissions..."
 rm -rf build
 mv Marvel\ Snap\ Tracker-linux-x64/ build
 chown -R $SUDO_USER:$SUDO_USER build 
 
+echo
+question "Do you want to install the application?" "[Y/n]"
+read input
+
+if [[ "$input" == "n" ]];
+then        
+    done-ok
+else      
+    question "Please, set the installation path:" "[$INSTALL_PATH]"
+    read input
+
+    if [[ "$input" == "" ]];
+    then        
+        $input=$INSTALL_PATH    
+    fi
+
+    echo
+    title "Installing the app into " $input ":"    
+    echo "Creating the destination folder..."
+    mkdir -p $input
+    
+    echo "Copying files..."
+    cp -Rf build/* $input
+
+    echo "Creating a shortcut into the app list..."    
+    src="marvel-snap-tracker.desktop"
+    dst="$HOME/.local/share/applications/$src"
+    
+    cp -f utils/$src $dst
+    sed -i "s|'<install_path>'|'$input'|g" $dst
+    echo "Done!"    
+fi
+
 echo ""
 echo -e "${GREEN}Done!${NC}"
-echo -e "You'll find the binary into the ${CYAN}build/${NC} folder, run it with ${CYAN}./Marvel\ Snap\ Tracker${NC}."
-echo -e "Also, you'll must setup the log path under the settings tab, this command will locate the proper folder: ${CYAN}sudo find / -type f -name ProfileState.json${NC} (thanks to ${CYAN}@leonardogonfiantini${NC})."
+echo -e "${LPURPLE}Notice:${NC} you'll must setup the log path under the settings tab, this command will locate the proper folder: ${CYAN}sudo find / -type f -name ProfileState.json${NC} (thanks to ${CYAN}@leonardogonfiantini${NC})."
 
 trap : 0
 exit 0
