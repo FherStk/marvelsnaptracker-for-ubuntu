@@ -18,17 +18,28 @@ YELLOW='\033[1;33m'
 ORANGE='\033[0;33m'
 CYAN='\033[0;36m'
 LCYAN='\033[1;36m'
-PURPLE='\033[1;35m'
+PURPLE='\033[0;35m'
+LPURPLE='\033[1;35m'
 NC='\033[0m' # No Color
 
 title(){
   ####################################################################################
   #Description: Displays a title caption using the correct colors. 
-  #Input:  $1 => Main caption | $2 => secondary caption
+  #Input:  $1 => Main caption | $2 => secondary caption | $3 => termination
   #Output: N/A
   ####################################################################################
 
-  echo -e "${LCYAN}${1}${CYAN}${2}${NC}"
+  echo -e "${LCYAN}${1}${CYAN}${2}${NC}${3}"
+}
+
+question(){
+  ####################################################################################
+  #Description: Displays a question caption using the correct colors. 
+  #Input:  $1 => Main caption | $2 => secondary caption | $3 => termination
+  #Output: N/A
+  ####################################################################################
+
+  echo -e "${LPURPLE}${1}${PURPLE}${2}${NC}${3}"
 }
 
 apt-install()
@@ -94,6 +105,22 @@ get-branch()
   CURRENT_BRANCH=$(git -C $BASE_PATH rev-parse --abbrev-ref HEAD)
 }
 
+run-in-user-session() {
+  ####################################################################################
+  #Description: Runs the given command for the current user (even if sudo)
+  #Source: https://stackoverflow.com/a/54720717
+  #Input:  $1 => the command to run
+  #Output: N/A
+  #################################################################################### 
+  
+  _display_id=":$(find /tmp/.X11-unix/* | sed 's#/tmp/.X11-unix/X##' | head -n 1)"
+  _username=$(who | grep "\($_display_id\)" | awk '{print $1}')
+  _user_id=$(id -u "$_username")
+  _environment=("DISPLAY=$_display_id" "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$_user_id/bus")
+  
+  sudo -Hu "$_username" env "${_environment[@]}" "$@"
+}
+
 abort()
 { 
   ####################################################################################
@@ -106,4 +133,14 @@ abort()
   echo ""
   echo -e "${RED}An error occurred. Exiting...$NC" >&2
   exit 1
+}
+
+done-ok()
+{
+  echo  
+  echo -e "${LPURPLE}Notice:${NC} you'll must setup the log path under the settings tab, this command will locate the proper folder: ${CYAN}sudo find / -type f -name ProfileState.json${NC} (thanks to ${CYAN}@leonardogonfiantini${NC})."
+  echo
+  echo -e "${GREEN}Done!${NC}"
+  trap : 0
+  exit 0
 }
