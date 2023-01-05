@@ -105,6 +105,22 @@ get-branch()
   CURRENT_BRANCH=$(git -C $BASE_PATH rev-parse --abbrev-ref HEAD)
 }
 
+run-in-user-session() {
+  ####################################################################################
+  #Description: Runs the given command for the current user (even if sudo)
+  #Source: https://stackoverflow.com/a/54720717
+  #Input:  $1 => the command to run
+  #Output: N/A
+  #################################################################################### 
+  
+  _display_id=":$(find /tmp/.X11-unix/* | sed 's#/tmp/.X11-unix/X##' | head -n 1)"
+  _username=$(who | grep "\($_display_id\)" | awk '{print $1}')
+  _user_id=$(id -u "$_username")
+  _environment=("DISPLAY=$_display_id" "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$_user_id/bus")
+  
+  sudo -Hu "$_username" env "${_environment[@]}" "$@"
+}
+
 abort()
 { 
   ####################################################################################
@@ -121,7 +137,9 @@ abort()
 
 done-ok()
 {
-  echo ""
+  echo  
+  echo -e "${LPURPLE}Notice:${NC} you'll must setup the log path under the settings tab, this command will locate the proper folder: ${CYAN}sudo find / -type f -name ProfileState.json${NC} (thanks to ${CYAN}@leonardogonfiantini${NC})."
+  echo
   echo -e "${GREEN}Done!${NC}"
   trap : 0
   exit 0
