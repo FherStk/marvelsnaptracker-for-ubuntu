@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Marvel Snap Tracker
-Exec=<install_path>Marvel\ Snap\ Tracker
-Icon=<install_path>resources/app/.webpack/main/statics/icon.ico
+Exec=<INSTALL_PATH>Marvel\ Snap\ Tracker
+Icon=<INSTALL_PATH>resources/app/.webpack/main/statics/icon.ico
 Terminal=false
 Type=Application
 Categories=Game;
