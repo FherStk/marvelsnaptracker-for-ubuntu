@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="1.1.0"
+VERSION="1.1.1"
 
 SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SCRIPT_FILE=$(basename $BASH_SOURCE)
@@ -33,7 +33,7 @@ echo ""
 title "Updating apt sources:"
 apt update
 
-apt-install lxc
+apt-install lxd-installer
 
 echo ""
 title "Setting up the LXC/LXD container:"    
