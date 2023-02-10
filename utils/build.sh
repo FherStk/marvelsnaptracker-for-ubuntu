@@ -41,6 +41,7 @@ else
     title "Updating the Marvel Snap Deck Tracker:"
     cd marvelsnaptracker
     git -C . reset --hard origin/master
+    git pull
 fi
 
 echo

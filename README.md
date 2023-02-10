@@ -1,6 +1,10 @@
 # Marvel Snap Tracker for Ubuntu
 An Ubuntu binary builder and installer for the Marvel Snap Tracker by Razviar (https://github.com/Razviar/marvelsnaptracker)
 
+It has been tested on:
+* Ubuntu 22.04 LTS
+* Ubuntu 21.10
+
 ## How to run this app
 1. Open a terminal.
 1. Clone the repository localy with `git clone https://github.com/FherStk/marvelsnaptracker-for-ubuntu.git`.
