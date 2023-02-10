@@ -33,7 +33,7 @@ echo ""
 title "Updating apt sources:"
 apt update
 
-apt-install lxc
+apt-install lxd-installer
 
 echo ""
 title "Setting up the LXC/LXD container:"    
