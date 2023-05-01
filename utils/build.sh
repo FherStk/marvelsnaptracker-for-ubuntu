@@ -48,6 +48,10 @@ echo
 title "Setting up the build environment:"
 npm install -g pkg electron-forge
 npm audit fix
+cd src/our-active-win/
+touch dummy.dll
+touch dummy.pdb
+cd ../..
 
 echo
 title "Building the binary:"

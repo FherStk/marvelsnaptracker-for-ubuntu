@@ -1,5 +1,5 @@
 #!/bin/bash
-VERSION="1.1.2"
+VERSION="1.2.0"
 
 SCRIPT_PATH=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 SCRIPT_FILE=$(basename $BASH_SOURCE)
