@@ -1,5 +1,5 @@
 # Marvel Snap Tracker for Ubuntu
-An Ubuntu binary builder and installer for the Marvel Snap Tracker by Razviar (https://github.com/Razviar/marvelsnaptracker)
+An Ubuntu (or Ubuntu based distros) binary builder and installer for the Marvel Snap Tracker by Razviar (https://github.com/Razviar/marvelsnaptracker)
 
 It has been tested on:
 * Ubuntu 22.04 LTS
