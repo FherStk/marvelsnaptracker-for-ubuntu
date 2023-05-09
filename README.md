@@ -4,8 +4,15 @@ An Ubuntu binary builder and installer for the Marvel Snap Tracker by Razviar (h
 It has been tested on:
 * Ubuntu 22.04 LTS
 * Ubuntu 21.10
+* Mint 21.1
 
-## How to run this app
+## How to run this app (Mint)
+1. Open a terminal.
+2. Run `sudo rm /etc/apt/preferences.d/nosnap.pref`
+3. Run `sudo apt install snapd && sudo snap install core && sudo snap install lxd`
+4. Follow the "Ubuntu" steps.
+
+## How to run this app (Ubuntu)
 1. Open a terminal.
 1. Clone the repository localy with `git clone https://github.com/FherStk/marvelsnaptracker-for-ubuntu.git`.
 1. Go inside the repository with `cd marvelsnaptracker-for-ubuntu`
