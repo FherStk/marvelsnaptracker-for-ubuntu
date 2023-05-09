@@ -8,9 +8,10 @@ It has been tested on:
 
 ## How to run this app (Mint)
 1. Open a terminal.
-2. Run `sudo rm /etc/apt/preferences.d/nosnap.pref`
+2. Run `sudo mv /etc/apt/preferences.d/nosnap.pref ~/nosnap.pref`
 3. Run `sudo apt install snapd && sudo snap install core && sudo snap install lxd`
 4. Follow the "Ubuntu" steps.
+5. Run `sudo mv ~/nosnap.pref /etc/apt/preferences.d/nosnap.pref`
 
 ## How to run this app (Ubuntu)
 1. Open a terminal.
