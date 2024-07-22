@@ -1,3 +1,6 @@
+#WARNING: NO LONER MANTAINED
+I'm sorry, but I dont' have enough time to mantain this repo :(
+
 # Marvel Snap Tracker for Ubuntu
 An Ubuntu (or Ubuntu based distros) binary builder and installer for the Marvel Snap Tracker by Razviar (https://github.com/Razviar/marvelsnaptracker)
 
